@@ -14,14 +14,25 @@ import (
 )
 
 type Book struct {
-	ID        int       `json:"id"`
-	Title     string    `json:"title"`
-	Author    string    `json:"author"`
-	ISBN      string    `json:"isbn"`
-	Year      int       `json:"year"`
-	Price     float64   `json:"price"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID            int       `json:"id"`
+	Title         string    `json:"title"`
+	Author        string    `json:"author"`
+	ISBN          string    `json:"isbn"`
+	Year          int       `json:"year"`
+	Price         float64   `json:"price"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
+	Category      string    `json:"category"`
+	OriginalPrice float64   `json:"originalPrice"`
+	Discount      int       `json:"discount"`
+	CoverImage    string    `json:"coverImage"`
+	Rating        float64   `json:"rating"`
+	ReviewsCount  int       `json:"reviews"`
+	IsNew         bool      `json:"isNew"`
+	Pages         int       `json:"pages"`
+	Language      string    `json:"language"`
+	Publisher     string    `json:"publisher"`
+	Description   string    `json:"description"`
 }
 
 func getEnv(key, defaultValue string) string {
@@ -70,7 +81,9 @@ func getAllBooks(c *gin.Context) {
 	var rows *sql.Rows
 	var err error
 	// ลูกค้าถาม "มีหนังสืออะไรบ้าง"
-	rows, err = db.Query("SELECT id, title, author, isbn, year, price, created_at, updated_at FROM books")
+	rows, err = db.Query(`SELECT id, title, author, isbn, year, price, created_at, updated_at, 
+		category, original_price, discount, cover_image, rating, reviews_count, is_new, 
+		pages, language, publisher, description FROM books`)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -80,7 +93,10 @@ func getAllBooks(c *gin.Context) {
 	var books []Book
 	for rows.Next() {
 		var book Book
-		err := rows.Scan(&book.ID, &book.Title, &book.Author, &book.ISBN, &book.Year, &book.Price, &book.CreatedAt, &book.UpdatedAt)
+		err := rows.Scan(&book.ID, &book.Title, &book.Author, &book.ISBN, &book.Year, &book.Price,
+			&book.CreatedAt, &book.UpdatedAt, &book.Category, &book.OriginalPrice, &book.Discount,
+			&book.CoverImage, &book.Rating, &book.ReviewsCount, &book.IsNew, &book.Pages,
+			&book.Language, &book.Publisher, &book.Description)
 		if err != nil {
 			// handle error
 		}
