@@ -23,7 +23,7 @@ const LoginPage = () => {
       localStorage.setItem('isAdminAuthenticated', 'true');
 
       // 6. เปลี่ยนหน้าไปยังหน้า Add Book
-      navigate('/store-manager/add-book');
+      navigate('/store-manager/all-books');
     } else {
       // 7. ถ้าไม่ถูกต้อง: แสดงข้อความ error
       setError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
@@ -31,9 +31,21 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-viridian-600
-      to-green-700 flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-500
+      flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-yellow-300 rounded-full 
+          mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-300 rounded-full 
+          mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+          w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 
+          animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="max-w-md w-full space-y-8 relative z-10">
 
         {/* <!-- Header --> */}
         <div>
@@ -114,9 +126,12 @@ const LoginPage = () => {
             <div>
               <button
                 type="submit"
-                className="w-full py-3 px-4 bg-viridian-600
-                  text-white font-medium rounded-lg
-                  hover:bg-viridian-700 transition-colors"
+                className="w-full py-3 px-4 bg-gradient-to-r from-gray-800 via-gray-900 to-black
+                  text-white font-bold rounded-lg
+                  hover:from-gray-700 hover:via-gray-800 hover:to-gray-900
+                  transition-all duration-300 shadow-lg
+                  hover:shadow-2xl transform hover:scale-105
+                  active:scale-95"
               >
                 เข้าสู่ระบบ
               </button>
